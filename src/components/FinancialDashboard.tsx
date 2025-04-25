@@ -8,6 +8,7 @@ import StatCard from './StatCard';
 import ExpenseItem from './ExpenseItem';
 import FinancialMetric from './FinancialMetric';
 import TabSelector from './TabSelector';
+import ChartPeriodSelector, { PeriodType } from './ChartPeriodSelector';
 
 const DashboardContainer = styled.div`
   padding: 24px 32px;
@@ -80,6 +81,7 @@ const TimeTabsContainer = styled.div`
 
 const FinancialDashboard: React.FC = () => {
   const [activeTimeTab, setActiveTimeTab] = useState('Год');
+  const [chartPeriod, setChartPeriod] = useState<PeriodType>('year');
   
   return (
     <DashboardContainer>
@@ -105,14 +107,13 @@ const FinancialDashboard: React.FC = () => {
             </CardTitle>
             
             <TimeTabsContainer>
-              <TabSelector
-                tabs={['Неделя', 'Месяц', 'Год']}
-                activeTab={activeTimeTab}
-                onTabChange={setActiveTimeTab}
+              <ChartPeriodSelector
+                activePeriod={chartPeriod}
+                onPeriodChange={setChartPeriod}
               />
             </TimeTabsContainer>
             
-            <SalesChart />
+            <SalesChart periodType={chartPeriod} />
             
             <StatsGrid>
               <StatCard

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -25,6 +25,8 @@ ChartJS.register(
 
 interface SalesChartProps {
   className?: string;
+  periodType?: 'year' | 'month' | 'week';
+  selectedPeriod?: string;
 }
 
 const ChartContainer = styled.div`
@@ -33,15 +35,72 @@ const ChartContainer = styled.div`
   margin-top: 16px;
 `;
 
-const SalesChart: React.FC<SalesChartProps> = ({ className }) => {
-  const months = ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'];
+const SalesChart: React.FC<SalesChartProps> = ({ 
+  className, 
+  periodType = 'year', 
+  selectedPeriod 
+}) => {
+  // Generate data based on period type
+  const getLabelsAndData = () => {
+    // Year view - months
+    if (periodType === 'year') {
+      return {
+        labels: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
+        b2bData: [2500000, 3200000, 3100000, 4000000, 3600000, 3900000, 4200000, 4800000, 5100000, 5500000, 6200000, 8615253],
+        b2cData: [1800000, 1200000, 900000, 1100000, 1000000, 1500000, 1600000, 1400000, 1200000, 800000, 600000, -1542511],
+        totalData: [3000000, 3500000, 3800000, 4500000, 4800000, 5200000, 6000000, 7200000, 8000000, 9500000, 9800000, 10157764]
+      };
+    }
+    
+    // Month view - days of month
+    if (periodType === 'month') {
+      // Generate 30 days for demo
+      const daysInMonth = 30;
+      const labels = Array.from({ length: daysInMonth }, (_, i) => `${i + 1}`);
+      
+      // Generate sample data with growth trend
+      const b2bData = Array.from({ length: daysInMonth }, (_, i) => {
+        const base = 200000 + (i * 8000);
+        return base + Math.random() * 50000;
+      });
+      
+      const b2cData = Array.from({ length: daysInMonth }, (_, i) => {
+        const base = 80000 - (i * 2000);
+        return base + Math.random() * 30000;
+      });
+      
+      const totalData = b2bData.map((value, index) => value + b2cData[index]);
+      
+      return { labels, b2bData, b2cData, totalData };
+    }
+    
+    // Week view - days of week
+    if (periodType === 'week') {
+      const labels = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+      const b2bData = [385000, 420000, 395000, 450000, 510000, 280000, 150000];
+      const b2cData = [125000, 110000, 140000, 135000, 160000, 190000, 80000];
+      const totalData = b2bData.map((value, index) => value + b2cData[index]);
+      
+      return { labels, b2bData, b2cData, totalData };
+    }
+    
+    // Default to year if nothing matches
+    return {
+      labels: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
+      b2bData: [2500000, 3200000, 3100000, 4000000, 3600000, 3900000, 4200000, 4800000, 5100000, 5500000, 6200000, 8615253],
+      b2cData: [1800000, 1200000, 900000, 1100000, 1000000, 1500000, 1600000, 1400000, 1200000, 800000, 600000, -1542511],
+      totalData: [3000000, 3500000, 3800000, 4500000, 4800000, 5200000, 6000000, 7200000, 8000000, 9500000, 9800000, 10157764]
+    };
+  };
+
+  const { labels, b2bData, b2cData, totalData } = getLabelsAndData();
   
   const data = {
-    labels: months,
+    labels,
     datasets: [
       {
         label: 'B2B',
-        data: [2500000, 3200000, 3100000, 4000000, 3600000, 3900000, 4200000, 4800000, 5100000, 5500000, 6200000, 8615253],
+        data: b2bData,
         borderColor: '#A060FC',
         backgroundColor: 'rgba(160, 96, 252, 0.1)',
         tension: 0.4,
@@ -53,7 +112,7 @@ const SalesChart: React.FC<SalesChartProps> = ({ className }) => {
       },
       {
         label: 'B2C',
-        data: [1800000, 1200000, 900000, 1100000, 1000000, 1500000, 1600000, 1400000, 1200000, 800000, 600000, -1542511],
+        data: b2cData,
         borderColor: '#30C7DC',
         backgroundColor: 'rgba(48, 199, 220, 0.1)',
         tension: 0.4,
@@ -65,7 +124,7 @@ const SalesChart: React.FC<SalesChartProps> = ({ className }) => {
       },
       {
         label: 'Итоги',
-        data: [3000000, 3500000, 3800000, 4500000, 4800000, 5200000, 6000000, 7200000, 8000000, 9500000, 9800000, 10157764],
+        data: totalData,
         borderColor: '#F5E230',
         backgroundColor: 'rgba(245, 226, 48, 0.1)',
         tension: 0.4,
