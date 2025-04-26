@@ -5,35 +5,34 @@ import Typography from './Typography';
 interface FinancialMetricProps {
   title: string;
   amount: string;
-  type: 'revenue' | 'expenses' | 'profit' | 'debt' | 'total';
+  type: 'revenue' | 'expenses' | 'profit' | 'debt' | 'total' | 'critical';
   className?: string;
+  isWarning?: boolean;
 }
 
 const MetricContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: 8px;
-  padding: 16px;
-  border-radius: 15px;
-  background-color: ${({ theme }) => theme.colors.bgLight};
-  margin-bottom: 12px;
-  position: relative;
-  overflow: hidden;
+  margin-top: 8px;
 `;
 
 const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 4px;
   z-index: 1;
 `;
 
 const ColorIndicator = styled.div<{ type: string }>`
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 15px;
+  min-width: 26px;
+  min-height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 21px;
+  font-weight: 600;
   background-color: ${({ type, theme }) => {
     switch (type) {
       case 'revenue':
@@ -43,7 +42,9 @@ const ColorIndicator = styled.div<{ type: string }>`
       case 'profit':
         return theme.colors.chartYellow;
       case 'debt':
-        return theme.colors.chartYellow;
+        return theme.colors.chartBlue;
+      case 'critical':
+        return theme.colors.chartRed;
       case 'total':
         return theme.colors.purple;
       default:
@@ -53,7 +54,6 @@ const ColorIndicator = styled.div<{ type: string }>`
 `;
 
 const MetricTitle = styled(Typography)`
-  margin-bottom: 4px;
 `;
 
 const FinancialMetric: React.FC<FinancialMetricProps> = ({
@@ -61,6 +61,7 @@ const FinancialMetric: React.FC<FinancialMetricProps> = ({
   amount,
   type,
   className,
+  isWarning = false,
 }) => {
   const titleIcon = () => {
     switch (type) {
@@ -81,12 +82,12 @@ const FinancialMetric: React.FC<FinancialMetricProps> = ({
 
   return (
     <MetricContainer className={className}>
-      <ColorIndicator type={type} />
+      <ColorIndicator type={type} >{isWarning && '!'}</ColorIndicator>
       <InfoContainer>
         <MetricTitle variant="subcaption" color="secondary">
           {title}
         </MetricTitle>
-        <Typography variant="h2" color="primary">
+        <Typography variant="h3" color="primary">
           {amount} {titleIcon()}
         </Typography>
       </InfoContainer>

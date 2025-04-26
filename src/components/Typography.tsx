@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 interface TypographyProps {
   variant?: 'h1' | 'h2' | 'h3' | 'caption' | 'subcaption';
-  color?: 'primary' | 'secondary' | 'tertiary' | 'white' | 'red' | 'yellow';
+  color?: 'primary' | 'secondary' | 'tertiary' | 'white' | 'red' | 'yellow' | 'black';
   children: React.ReactNode;
   className?: string;
 }

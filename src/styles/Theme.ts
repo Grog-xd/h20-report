@@ -15,7 +15,8 @@ export const theme = {
     purple: '#A060FC',
     chartBlue: '#30C7DC',
     chartYellow: '#F5E230',
-    lightGray: '#D2D1D1'
+    lightGray: '#D2D1D1',
+    chartRed: '#FC5C65'
   },
   borderRadius: {
     large: '56px',

@@ -52,7 +52,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ name, role, avatarUrl }) => {
         <StatusIndicator />
       </AvatarContainer>
       <UserDetails>
-        <Typography variant="caption" color="white">{name}</Typography>
+        <Typography variant="caption" color="black">{name}</Typography>
         <Typography variant="subcaption" color="tertiary">{role}</Typography>
       </UserDetails>
     </UserInfoContainer>

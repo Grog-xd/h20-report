@@ -29,6 +29,11 @@ const CardContainer = styled.div<{ variant: string }>`
   border-radius: ${({ theme }) => theme.borderRadius.small};
   padding: 16px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Title = styled(Typography)`
@@ -36,7 +41,7 @@ const Title = styled(Typography)`
 `;
 
 const Value = styled(Typography)`
-  margin-bottom: 12px;
+  margin-top: 12px;
 `;
 
 const ChangeContainer = styled.div<{ trend?: string; variant: string }>`
@@ -111,20 +116,21 @@ const StatCard: React.FC<StatCardProps> = ({
 
   return (
     <CardContainer variant={variant} className={className}>
-      <Title variant="h3" color={textColor}>
-        {title}
-      </Title>
-      <Value variant="h2" color={textColor}>
-        {value}
-      </Value>
       {change && trend && (
         <ChangeContainer trend={trend} variant={variant}>
           <TrendIcon trend={trend} variant={variant} />
-          <ChangeText variant="caption" color={textColor}>
+          <ChangeText variant={variant} color={textColor}>
             {change}
           </ChangeText>
         </ChangeContainer>
       )}
+     
+      <Value variant="h2" color={textColor}>
+        {value}
+      </Value>
+      <Title variant="h3" color={textColor}>
+        {title}
+      </Title>
     </CardContainer>
   );
 };

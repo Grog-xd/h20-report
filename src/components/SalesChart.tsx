@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -121,6 +120,7 @@ const SalesChart: React.FC<SalesChartProps> = ({
         pointBorderWidth: 3,
         pointRadius: 6,
         pointHoverRadius: 8,
+        
       },
       {
         label: 'Итоги',

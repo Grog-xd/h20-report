@@ -4,26 +4,25 @@ import MenuItem from './MenuItem';
 
 const SidebarContainer = styled.div`
   height: 100vh;
-  width: 100px;
+  width: 200px;
   background: ${({ theme }) => theme.colors.primary};
   border-radius: 56px 0 0 56px;
   padding: 32px 24px;
   box-shadow: 5px 0 15px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
-  position: fixed;
-  left: 0;
-  top: 0;
   z-index: 10;
 `;
 
 const Logo = styled.img`
   margin-bottom: 48px;
+  width: 63px;
+  height: 38px;
 `;
 
 const NavigationSection = styled.div`
   flex: 1;
-  margin-bottom: 24px;
+  width: 50%;
 `;
 
 const Sidebar: React.FC = () => {

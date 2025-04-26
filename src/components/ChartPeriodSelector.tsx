@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 export type PeriodType = 'year' | 'month' | 'week';
+export type ReportType = 'employee' | 'company' | 'order';
 
 interface ChartPeriodSelectorProps {
   activePeriod: PeriodType;
@@ -13,24 +14,20 @@ const SelectorContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-bottom: 16px;
 `;
 
 const TabButton = styled.button<{ active: boolean }>`
   padding: 8px 16px;
-  background: ${props => props.active ? '#A060FC' : 'transparent'};
-  color: ${props => props.active ? '#FFFFFF' : '#323F47'};
-  border: 1px solid ${props => props.active ? '#A060FC' : '#E5E5E5'};
-  border-radius: 4px;
+  color: ${props => props.active ? props.theme.colors.textPrimary : props.theme.colors.textSecondary};
+  border-bottom: ${props => props.active ? ` 2px solid ${props.theme.colors.primary}` : '2px solid transparent'};
+  border-top: 0px;
+  border-left: 0px;
+  border-right: 0px;
   font-family: 'Proxima Nova', sans-serif;
   font-weight: 600;
   font-size: 14px;
   cursor: pointer;
-  transition: all 0.2s ease;
-  
-  &:hover {
-    background: ${props => props.active ? '#A060FC' : '#F8F8F8'};
-  }
+  background: transparent;
 `;
 
 const ChartPeriodSelector: React.FC<ChartPeriodSelectorProps> = ({

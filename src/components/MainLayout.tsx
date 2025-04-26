@@ -8,13 +8,18 @@ interface MainLayoutProps {
 
 const LayoutContainer = styled.div`
   display: flex;
+  margin:0 auto
 `;
 
 const ContentContainer = styled.div`
-  margin-left: 280px;
-  width: calc(100% - 280px);
+  width: calc(100% - 200px);
   min-height: 100vh;
   background-color: ${({ theme }) => theme.colors.bgPrimary};
+  border-radius: 56px 0 0 0;
+  position: relative;
+  left: -90px;
+  top: 0;
+  z-index: 20;
 `;
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
