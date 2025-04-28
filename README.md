@@ -54,6 +54,3 @@ The application will open in your default browser at `http://localhost:3000`.
 - `/src/styles` - Global styles and theme
 - `/public/assets` - Static assets like images
 
-## License
-
-This project is licensed under the MIT License.
